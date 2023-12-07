@@ -1,16 +1,31 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 // const root = document.getElementById('root');
 // const p = document.createElement('p');
 // p.innerText = "Hello from dj";
 
 // root.appendChild(p);
+// const apiData = 'hello from API'
+ const handleClick = (state) => {
+  console.log("Handle click called", state);
+}
+const isMorning = true
+const morningText = 'Morning user'
+const afternoonText = 'Afternoon user'
+const morningElement = <div>{morningText} <span onClick={() => handleClick(isMorning)}>It's 8 am</span> </div>
+const asfternoonElement = <div>{afternoonText} It's 2 pm </div>
+const greetingElement = isMorning ? morningElement:asfternoonElement
 
-const child1 = React.createElement('p' , {} , "I am a child1")
-const child2 = React.createElement('p', {}, "I am a child2")
-// const div = React.createElement('div', { className: 'text' }, [child1, child2])
-console.log(div)
-const div = <div className = 'text'>Hello 2 </div>
+const GreetingComponent = function () {
+  // return greetingElement + 'Inside component'
+  return <>
+    {greetingElement}
+    Inside component
+  </>
+
+}
+console.log(GreetingComponent);
 const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(div)
+// root.render(GreetingComponent())
+root.render(<GreetingComponent></GreetingComponent>)
