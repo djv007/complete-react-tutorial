@@ -1,43 +1,33 @@
 import Button from "./Button";
 import Text from "./Text";
-import React, {useState} from "react";
+import React, {useState , useCallback} from "react";
 
 
 const App = () => {
-  // return "Hello from App"
-  // const handleClickAction = () => {
-  //   console.log("I was clicked from parent");
-  // }
-  // return <Button data = {{a : {b : {c: 'c'}}}} clickAction={handleClickAction}>Click Me</Button>
+  let [message, setData] = useState("Hello!, good morning");
 
-  const [data, setData] = useState([
-    { id: 'a', text: "text 0" },
-    { id: 'b', text: "text 1" },
-    { id: 'c', text: "text 2" },
-    { id: 'd', text: "text 3" },
-    { id: 'e', text: "text 4" },
-  ])
+  const changeMessage = useCallback(() => {
+    // console.log("before update" , message);
+    // setData(message);
+    setData( (prevData) => {
+      console.log("previous data : " , prevData);
+      return "Hello!, good afternoon";
+    })
 
-  const addMoreData = () => {
-    // don't add in start , it's performance degradation , as it will call Text comp
-    // each time even when it's not needed
-    // to fix above thing use id in data[] as key and not the index as key 
+    // even after update , message value will be older one as setData() is an async task
+    // console.log("after update", message);
 
-    // setData((prevData) => [ { id: 'f', text: 'text 5' }, ...prevData]);
-
-    
-    setData((prevData) => [...prevData, {id : 'f' , text: 'text 5'}]);
-  }
+  }, [])
 
   return <>
-  {data.map((item , index) => <Text key = {item.id}>{item.text}</Text>)}
-    <Button clickAction={addMoreData}>Add more data</Button>
+  <div>{message}</div>
+    {/* <button onClick={changeMessage}>Change Message</button> */}
+    <Button clickAction={changeMessage}>Change Message</Button>
   </>
 }
 
 export default App;
 // to import it use import App from './App';
 
-// called named export
 export {App};
-// to import it use import {App} from './App';
+
