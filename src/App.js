@@ -1,52 +1,43 @@
 import Button from "./Button";
 import Text from "./Text";
-import React, {useState , useCallback, useEffect} from "react";
+import React, { useState, useRef, useCallback, useEffect} from "react";
 import Timer from "./Timer";
 import ButtonWithTooltip from "./ButtonWithTooltip";
+import Input from './Input';
 
 
 const App = () => {
-  // const [data1, setData1] = useState(0);
-  // const [data2, setData2] = useState(0);
+  let myLocal = 0
+  console.log("myLocal", myLocal)
+  const ref = useRef(0)
+  const [myCount, setCount] = useState(0)
+  console.log("ref.current", ref.current)
 
-  // useEffect( () => {
-  //   console.log("data 1 changed");
-  // }, [data1]);
+  const inputRef = useRef(null)
 
-  // useEffect(() => {
-  //   console.log("data 2 changed");
-  // }, [data2]);
 
-  // const [showTimer , toggleTimer] = useState(true);
   return <>
-    <ButtonWithTooltip
-      tooltipContent={
-        <div>
-          This tooltip does not fit above the button.
-          <br />
-          This is why it's displayed below instead!
-        </div>
-      }
-    >
-      Hover over me (tooltip above)
-    </ButtonWithTooltip>
-    <div style={{ height: 50 }} />
-    <ButtonWithTooltip
-      tooltipContent={
-        <div>This tooltip fits above the button</div>
-      }
-    >
-      Hover over me (tooltip below)
-    </ButtonWithTooltip>
-    <div style={{ height: 50 }} />
-    <ButtonWithTooltip
-      tooltipContent={
-        <div>This tooltip fits above the button</div>
-      }
-    >
-      Hover over me (tooltip below)
-    </ButtonWithTooltip>
-  </>
+  <button onClick={() => {myLocal+= 1}}>Change local variable</button>
+      <button onClick={() => {ref.current += 1}}>Change ref</button>
+      <button onClick={() => {setCount((prevCount) => prevCount + 1)}}>Change state</button>
+
+      <div>
+        <span>Local var: {myLocal}</span><br/>
+        <span>ref: {ref.current}</span><br/>
+        <span>state variable: {myCount}</span><br/>
+      </div>
+
+      <h4>Timer example</h4>
+      <Timer>This is my timer</Timer>
+
+      <h4>DOM example</h4>
+      <Input ref={inputRef} />
+      {/* if we are not using forwardRef in Input comp then we can create our own customRef like this  <Input myRef={inputRef} /> it'll work , but it is not advised to do so */}
+      <button onClick={() => {
+        console.log(inputRef.current.getBoundingClientRect())
+        if (inputRef.current) inputRef.current.focus()
+      }}>Focus the inputbox</button>
+    </>
 }
 
 export default App;
