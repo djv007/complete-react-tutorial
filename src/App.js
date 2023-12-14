@@ -1,29 +1,38 @@
 import Button from "./Button";
 import Text from "./Text";
-import React, {useState , useCallback} from "react";
+import React, {useState , useCallback, useEffect} from "react";
+import Timer from "./Timer";
 
 
 const App = () => {
-  let [message, setData] = useState("Hello!, good morning");
+  // const [data1, setData1] = useState(0);
+  // const [data2, setData2] = useState(0);
 
-  const changeMessage = useCallback(() => {
-    // console.log("before update" , message);
-    // setData(message);
-    setData( (prevData) => {
-      console.log("previous data : " , prevData);
-      return "Hello!, good afternoon";
-    })
+  // useEffect( () => {
+  //   console.log("data 1 changed");
+  // }, [data1]);
 
-    // even after update , message value will be older one as setData() is an async task
-    // console.log("after update", message);
+  // useEffect(() => {
+  //   console.log("data 2 changed");
+  // }, [data2]);
 
-  }, [])
-
+  const [showTimer , toggleTimer] = useState(true);
   return <>
-  <div>{message}</div>
-    {/* <button onClick={changeMessage}>Change Message</button> */}
-    <Button clickAction={changeMessage}>Change Message</Button>
+  {showTimer && <Timer customText = "this is a good clock"/>}
+    <button onClick={() => toggleTimer(!showTimer)}>Toggle timer from app</button>
   </>
+
+  // return <>
+  //   <Text externalData = {data1}></Text>
+  //   <br />
+  //   <button onClick={() => setData1( (prevData) => prevData + 1)}>Update 1</button>
+
+  //   <br/>
+
+  //   <Text externalData={data2}></Text>
+  //   <br />
+  //   <button onClick={() => setData2((prevData) => prevData + 1)}>Update 2</button>
+  // </>
 }
 
 export default App;
