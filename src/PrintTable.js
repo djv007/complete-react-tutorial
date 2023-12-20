@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, memo } from 'react';
 const generateTable = (number) => {
   const arr = []
   let startTime = performance.now();
@@ -11,15 +11,19 @@ const generateTable = (number) => {
   return arr
 }
 
-const PrintTable = (props) => {
-  const { num } = props
-  // we are using useMemo hook , we could have wrapped generateTable in memo also 
-  // passing reactive varaible num in dependency array 
-  const table = useMemo(() => generateTable(num), [num])
+const PrintTable = memo((props) => {
+  const { num, obj, val, arr } = props
+  // const table = useMemo(() => generateTable(num), [num])
+  const table = generateTable(num)
   console.log(table)
   return <>
     {table}
-  </>
-}
+    {obj?.channel}
+    <br />
+    {val}
+    <br />
+    {arr?.map((item) => <span>{item}</span>)}
+    </>
+})
 
 export default PrintTable;
