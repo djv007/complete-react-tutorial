@@ -9,6 +9,7 @@ import PrintTable from './PrintTable'
 import Heading from './Heading';
 import Navbar from './Navbar';
 import { ThemeContext } from './context'
+import { createPortal } from 'react-dom';
 
 const Text = lazy(() => delayForDemo(import('./Text.js')));
 
@@ -19,11 +20,13 @@ function delayForDemo(promise) {
 }
 
 const App = () => {
-  const [theme, setTheme] = useState('dark');
-  return <ThemeContext.Provider value={[theme, setTheme]}>
-    <Navbar />
-    <Heading />
-  </ThemeContext.Provider>
+  const [showModal, toggleModal] = useState(false);
+  return <>
+      Hey i am inside root <button onClick={() => toggleModal((prev) => !prev)}>Toggle Modal</button>
+
+      {showModal && createPortal(<div>This is modal content</div>, document.body)}
+      {/* {showModal && <div>This is modal content</div>} */}
+    </>
 }
 
 export default App;
